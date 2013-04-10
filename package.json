@@ -1,0 +1,39 @@
+{
+  "name": "gmail-sender",
+  "version": "0.1.0",
+  "description": "Sends emails by a given Gmail account",
+  "homepage": "http://github.com/marcusbaer/node-gmail-sender",
+  "keywords": [
+    "emailer",
+    "library"
+  ],
+  "author": {
+    "name": "Marcus Baer",
+    "email": "info@baer-media.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/marcusbaer/node-gmail-sender.git"
+  },
+  "bugs": {
+    "url": "http://github.com/marcusbaer/node-gmail-sender/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://github.com/marcusbaer/node-gmail-sender/blob/master/LICENSE"
+    }
+  ],
+  "engines": {
+    "node": ">=0.10",
+    "npm": ">=1.2.14"
+  },
+  "dependencies": {
+    "nodemailer": "~0.4.1",
+    "underscore": "~1.4.4"
+  },
+  "main": "./index.js",
+  "readmeFilename": "README.md",
+  "_id": "gmail-sender@0.1.0",
+  "_from": "gmail-sender@"
+}
