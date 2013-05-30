@@ -1,6 +1,7 @@
 ﻿var Emailer, exports, _,
     emailer = require("nodemailer");
     _ = require("underscore");
+    fs = require("fs");
 
 Emailer = (function() {
 
