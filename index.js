@@ -17,16 +17,22 @@ Emailer = (function() {
 
     Emailer.prototype.send = function(callback) {
         var attachments, html, messageData, transport;
-        html = this.getHtml(this.options.template, this.data);
+		if (this.options.template) {
+			html = this.getHtml(this.options.template, this.data);
+		}
         attachments = this.getAttachments(html);
         messageData = {
             to: "'" + this.options.to.name + " " + this.options.to.surname + "' <" + this.options.to.email + ">",
             from: this.options.from,
             subject: this.options.subject,
-            html: html,
-            generateTextFromHTML: true,
             attachments: attachments
         };
+		if (html) {
+			messageData.html = html;
+			messageData.generateTextFromHTML = true;
+		} else {
+			messageData.text = this.options.text;
+		}
         transport = this.getTransport();
         return transport.sendMail(messageData, callback);
     };

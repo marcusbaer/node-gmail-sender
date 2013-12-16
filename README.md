@@ -52,3 +52,5 @@ Options
 Any options can be set by both methods `options()` and `send()`. With `options()` you can define default configuration, e.g. from an extra local file, that is not in a repository. All options to `send()` will overwrite default.
 
 The folder assets holds HTML mail template and attached files.
+
+Use option `text` to set a message text instead of using a template.

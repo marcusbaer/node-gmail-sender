@@ -1,6 +1,6 @@
 {
   "name": "gmail-sender",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Sends emails by a given Gmail account",
   "homepage": "http://github.com/marcusbaer/node-gmail-sender",
   "keywords": [
@@ -29,11 +29,11 @@
     "npm": ">=1.2.14"
   },
   "dependencies": {
-    "nodemailer": "~0.4.1",
+    "nodemailer": "~0.5.15",
     "underscore": "~1.4.4"
   },
   "main": "./index.js",
   "readmeFilename": "README.md",
-  "_id": "gmail-sender@0.1.0",
+  "_id": "gmail-sender@0.1.1",
   "_from": "gmail-sender@"
 }
