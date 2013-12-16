@@ -1,6 +1,7 @@
 ﻿var Emailer, exports, _,
     emailer = require("nodemailer");
-    _ = require("underscore");
+_ = require("underscore");
+var fs = require("fs");
 
 Emailer = (function() {
 
@@ -17,22 +18,22 @@ Emailer = (function() {
 
     Emailer.prototype.send = function(callback) {
         var attachments, html, messageData, transport;
-		if (this.options.template) {
-			html = this.getHtml(this.options.template, this.data);
-		}
-        attachments = this.getAttachments(html);
+        if (this.options.template) {
+            html = this.getHtml(this.options.template, this.data);
+            attachments = this.getAttachments(html);
+        }
         messageData = {
             to: "'" + this.options.to.name + " " + this.options.to.surname + "' <" + this.options.to.email + ">",
             from: this.options.from,
-            subject: this.options.subject,
-            attachments: attachments
+            subject: this.options.subject
         };
-		if (html) {
-			messageData.html = html;
-			messageData.generateTextFromHTML = true;
-		} else {
-			messageData.text = this.options.text;
-		}
+        if (html) {
+            messageData.html = html;
+            messageData.generateTextFromHTML = true;
+            messageData.attachments = attachments;
+        } else {
+            messageData.text = this.options.text;
+        }
         transport = this.getTransport();
         return transport.sendMail(messageData, callback);
     };
@@ -74,36 +75,47 @@ Emailer = (function() {
 
 var Gmailer = function () {
 
-    this.options = function (options) {
-        this.options = _.extend(this.options, options);
-    };
+    var Gmailer = {
 
-    this.send = function (mailconfig) {
-        var data, emailer, options;
+        options: function (options) {
+            this.options = _.extend(this.options, options);
+        },
 
-        mailconfig = (mailconfig) ? _.extend(mailconfig, this.options['email']): this.options['email'];
-        //sys.log('SEND MAIL "' + mailconfig.subject + '" to ' + mailconfig.to.email);
+        send: function (mailconfig) {
+            var data, emailer, options;
 
-        options = {
-            smtp: mailconfig.smtp,
-            attachments: mailconfig.attachments,
-            template: mailconfig.template,
-            subject: mailconfig.subject,
-            from: mailconfig.from,
-            to: mailconfig.to
-        };
+            mailconfig = (mailconfig) ? _.extend(mailconfig, this.options['email']): this.options['email'];
+            //sys.log('SEND MAIL "' + mailconfig.subject + '" to ' + mailconfig.to.email);
 
-        data = mailconfig.data;
+            options = {
+                attachments: mailconfig.attachments,
+                template: mailconfig.template,
+                subject: mailconfig.subject,
+                from: mailconfig.from,
+                to: mailconfig.to
+            };
 
-        emailer = new Emailer(options, data);
+            options = _.extend(this.options, options);
 
-        emailer.send(function(err, result) {
-            if (err) return console.log(err);
+            if (mailconfig.smtp) {
+                options.smtp = mailconfig.smtp;
+            }
+
+            data = mailconfig.data;
+
+            emailer = new Emailer(options, data);
+
+            emailer.send(function(err, result) {
+                if (err) return console.log(err);
 //            console.log(result);
-        });
+            });
+
+        }
 
     };
+
+    return Gmailer;
 
 };
 
-exports = module.exports = Gmailer;
+exports = module.exports = Gmailer();
